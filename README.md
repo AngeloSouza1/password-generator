@@ -20,16 +20,13 @@ Com o Password Generator, você pode criar senhas seguras e aleatórias com faci
 #### Veja!
 
 
- <a href="https://password-generator1.fly.dev/">
+<a href="https://password-generator1.fly.dev/">
     <img src="https://img.shields.io/badge/ACESSO O%20SITE!-darkgreen" alt="Site">
- </a>
+</a>
 
 
- <a href="https://vimeo.com/914861311/cd886f0b0e">
-    <img src="https://img.shields.io/badge/VÍDEO DE FUNCIONALIDADE%20-darkblue" alt="Site">
- </a>
 
----
+
 
  ### 📋 Instalação
 
