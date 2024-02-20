@@ -44,7 +44,9 @@ cd password_generator
 🔹 Abra o arquivo index.html em seu navegador.
 
 🔹 Insira o número referente a quantidade de caracteres da senha.
+
 🔹 Clique no botão "Gerar senha" para ver o resultado.
+
 🔹 Clique no botão "Refresh" para inicar a aplicação.
 
 <p>
