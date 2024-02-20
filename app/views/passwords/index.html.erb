@@ -1,0 +1,110 @@
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+       <h2>Password Generator</h2>
+       <br>
+     
+     
+      <div id="password-form">
+        <%= form_with url: generate_password_path, method: :post, remote: true do |f| %>
+          <div class="form-group">
+          <%= label_tag :length, 'Tamanho da Senha (entre 8 e 35 caracteres):' %>
+          <%= number_field_tag :length, nil, min: 8, max: 35 %>
+          </div>
+          
+          <div class="form-check">
+            <%= check_box_tag :include_uppercase, '1', false, class: 'form-check-input', id: 'include_uppercase_checkbox' %>
+            <%= label_tag :include_uppercase, 'Incluir Letras Maiúsculas', class: 'form-check-label' %>
+          </div>
+
+          <div class="form-check">
+            <%= check_box_tag :include_lowercase, '1', false, class: 'form-check-input', id: 'include_lowercase_checkbox' %>
+            <%= label_tag :include_lowercase, 'Incluir Letras Minúsculas', class: 'form-check-label' %>
+          </div>
+
+          <div class="form-check">
+            <%= check_box_tag :include_numbers, '1', false, class: 'form-check-input', id: 'include_numbers_checkbox' %>
+            <%= label_tag :include_numbers, 'Incluir Números', class: 'form-check-label' %>
+          </div>
+
+          <%= submit_tag 'Gerar Senha', class: 'btn btn-success mt-3', disabled: true, id: 'generate-button' %>
+        <% end %>
+
+        <button type="button" onclick="limparDados()" class="btn btn-primary mt-3">Refresh</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <% if @generated_password.present? %>
+      <div id="generated-password" class="text-center p-4 border rounded ">
+        <% if flash[:notice] %>
+          <p><%= flash[:notice] %></p>
+        <% end %>
+        <p class="bg-info text-white p-2 rounded"><%= @generated_password %></p>
+      </div>
+      <% else %>
+      <div id="generated-password" class="text-center p-4">
+        <% if flash[:notice] %>
+          <p><%= flash[:notice] %></p>
+        <% end %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const generateButton = document.getElementById('generate-button');
+    const includeUppercaseCheckbox = document.getElementById('include_uppercase_checkbox');
+    const includeLowercaseCheckbox = document.getElementById('include_lowercase_checkbox');
+    const includeNumbersCheckbox = document.getElementById('include_numbers_checkbox');
+    const lengthInput = document.getElementById('length');
+    const generateNewPasswordButton = document.getElementById('generate-new-password-button');
+
+    function updateGenerateButton() {
+      const atLeastOneChecked = includeUppercaseCheckbox.checked || includeLowercaseCheckbox.checked || includeNumbersCheckbox.checked;
+      const isValidLength = lengthInput.value >= 8;
+      generateButton.disabled = !atLeastOneChecked || !isValidLength;
+    }
+
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', updateGenerateButton);
+    });
+
+    lengthInput.addEventListener('input', updateGenerateButton);
+
+    generateNewPasswordButton.addEventListener('click', () => {
+      checkboxes.forEach(checkbox => {
+        checkbox.checked = false;
+      });
+      lengthInput.value = '';
+      updateGenerateButton();
+    });
+  });
+
+  function limparDados() {
+    // Limpar os campos de entrada
+    document.getElementById('length').value = '';
+    
+    // Limpar os checkboxes
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+      checkbox.checked = false;
+    });
+
+    // Recarregar a página
+    window.location.reload();
+  }
+
+
+</script>
